@@ -16,7 +16,7 @@ app = express()
 
 # Configuration parameters
 
-if process.env.HEROKU_POSTGRESQL_AQUA_URL?
+if process.env.DATABASE_URL?
 	app.set 'mode', 'production' 
 else
 	app.set 'mode', 'development'
@@ -55,7 +55,7 @@ process.httpserverinstance = http.createServer(app).listen app.get('port'), ->
 if app.get('mode') == 'production'
 	console.log 'Starting application in production mode.'
 	pg = require 'pg'
-	db = new pg.Client process.env.HEROKU_POSTGRESQL_AQUA_URL
+	db = new pg.Client process.env.DATABASE_URL
 else 
 	console.log 'Starting application in development mode.'
 	mysql = require 'mysql'
