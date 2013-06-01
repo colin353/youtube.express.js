@@ -1,0 +1,25 @@
+mixin youtube_swf()
+	object(width='640', height='360')
+		param(name='movie', value='https://www.youtube.com/v/30Acy8Z9jkw?version=3')
+		param(name='allowFullScreen', value='true')
+		param(name='allowScriptAccess', value='always')
+		embed(ype='application/x-shockwave-flash', allowfullscreen='true', id='ytplayer', allowscriptaccess='always', width='640', height='360')
+
+mixin controls()
+	div.controls
+		div.volume
+			span.titlecard volume
+			div.volume-container
+				div.volume-control
+		div.container 
+			div.span3
+				span.titlecard.pause-control pause 
+					i.icon-pause
+				span.titlecard.play-control.hide play 
+					i.icon-play 
+
+			div.span3
+				span.titlecard.skip-control skip 
+					i.icon-fast-forward 
+
+

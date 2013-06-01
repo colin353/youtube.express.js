@@ -1,0 +1,14 @@
+include mixins
+extends layout
+
+block javascripts
+	script(src='/js/application_client.js')
+
+block left_bar_content
+	h1 youtube.js server
+
+	mixin controls()
+
+block right_bar_content
+	h1 upcoming
+	ul.media-list
