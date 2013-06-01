@@ -13,7 +13,11 @@ path = require('path');
 
 app = express();
 
-app.set('port', process.env.PORT || 3000);
+app.set('port', 3000);
+
+if (process.env.PORT != null) {
+  app.set('port', process.env.PORT);
+}
 
 if (process.env.HEROKU_POSTGRESQL_AQUA_URL != null) {
   app.set('mode', 'production');
@@ -54,9 +58,11 @@ process.httpserverinstance = http.createServer(app).listen(app.get('port'), func
 });
 
 if (app.get('mode') === 'production') {
+  console.log('Starting application in production mode.');
   pg = require('pg');
   db = new pg.Client(process.env.HEROKU_POSTGRESQL_AQUA_URL);
 } else {
+  console.log('Starting application in development mode.');
   mysql = require('mysql');
   db = mysql.createConnection({
     host: 'localhost',
