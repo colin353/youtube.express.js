@@ -23,6 +23,8 @@ if process.env.DATABASE_URL?
 else
 	app.set 'mode', 'development'
 
+console.log 'Application started in ',app.get('mode'),'mode'
+
 app.set	'views', __dirname + '/views'
 app.set 'view engine', 'jade'
 
@@ -51,9 +53,11 @@ process.httpserverinstance = http.createServer(app).listen app.get('port'), ->
 # Connect to the database
 
 if app.get('mode') == 'production'
+	console.log 'Attempting to connect to pg via ', process.env.DATABASE_URL
 	pg = require 'pg'
 	db = new pg.Client process.env.DATABASE_URL
 else 
+	console.log 'Attempting to connect to mysql via ', process.env.DATABASE_URL
 	mysql = require 'mysql'
 	db = mysql.createConnection {
 		host: 		'localhost',
