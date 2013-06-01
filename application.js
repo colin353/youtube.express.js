@@ -13,16 +13,12 @@ path = require('path');
 
 app = express();
 
+app.set('port', process.env.PORT || 3000);
+
 if (process.env.DATABASE_URL != null) {
   app.set('mode', 'production');
 } else {
   app.set('mode', 'development');
-}
-
-app.set('port', 3000);
-
-if (app.get('mode') === 'production') {
-  app.set('port', process.env.PORT);
 }
 
 app.set('views', __dirname + '/views');
@@ -58,11 +54,9 @@ process.httpserverinstance = http.createServer(app).listen(app.get('port'), func
 });
 
 if (app.get('mode') === 'production') {
-  console.log('Starting application in production mode.');
   pg = require('pg');
   db = new pg.Client(process.env.DATABASE_URL);
 } else {
-  console.log('Starting application in development mode.');
   mysql = require('mysql');
   db = mysql.createConnection({
     host: 'localhost',
