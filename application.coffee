@@ -17,8 +17,9 @@ app = express()
 # Configuration parameters
 
 app.set 'port', process.env.PORT || 3000
+app.set 'database url', process.env.DATABASE_URL
 
-if process.env.DATABASE_URL?
+if app.get 'database url'
 	app.set 'mode', 'production' 
 else
 	app.set 'mode', 'development'
@@ -53,11 +54,11 @@ process.httpserverinstance = http.createServer(app).listen app.get('port'), ->
 # Connect to the database
 
 if app.get('mode') == 'production'
-	console.log 'Attempting to connect to pg via ', process.env.DATABASE_URL
+	console.log 'Attempting to connect to pg via ', app.get('database url')
 	pg = require 'pg'
-	db = new pg.Client process.env.DATABASE_URL
+	db = new pg.Client app.get('database url')
 else 
-	console.log 'Attempting to connect to mysql via ', process.env.DATABASE_URL
+	console.log 'Attempting to connect to mysql via ', app.get('database url')
 	mysql = require 'mysql'
 	db = mysql.createConnection {
 		host: 		'localhost',
