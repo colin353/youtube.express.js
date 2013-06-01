@@ -67,9 +67,12 @@ else
 		database:	'video'
 	}
 
-process.db = db
+process.db  = db
+process.app = app
 
 # Perform migration, if necessary.
+
+require './migration'
 
 # Do socket.io connection setup.
 require './sock'

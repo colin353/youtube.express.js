@@ -8,7 +8,6 @@
 
 io = require 'socket.io'
 io = io.listen(process.httpserverinstance)
-console.log process.app
 
 # Database has already been setup. Use it from here.
 db = process.db
@@ -28,7 +27,7 @@ class Video
 	@get: (callback) ->
 		retval = [];
 
-		db.query "select * from videos order by last_played = '0000-00-00 00:00:00' desc, last_played asc limit 4", (err, result) ->
+		db.query "select * from videos order by last_played = NULL desc, last_played asc limit 4", (err, result) ->
 			throw err if err
 			for row in result
 				retval.push new Video(row.id)
