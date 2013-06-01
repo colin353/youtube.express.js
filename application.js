@@ -13,16 +13,16 @@ path = require('path');
 
 app = express();
 
-app.set('port', 3000);
-
-if (process.env.PORT != null) {
-  app.set('port', process.env.PORT);
-}
-
 if (process.env.HEROKU_POSTGRESQL_AQUA_URL != null) {
   app.set('mode', 'production');
 } else {
   app.set('mode', 'development');
+}
+
+app.set('port', 3000);
+
+if (app.get('mode') === 'production') {
+  app.set('port', process.env.PORT);
 }
 
 app.set('views', __dirname + '/views');

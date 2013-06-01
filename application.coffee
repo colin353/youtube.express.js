@@ -16,14 +16,14 @@ app = express()
 
 # Configuration parameters
 
-app.set 'port', 3000 
-app.set 'port', process.env.PORT if process.env.PORT?
-
-
 if process.env.HEROKU_POSTGRESQL_AQUA_URL?
 	app.set 'mode', 'production' 
 else
 	app.set 'mode', 'development'
+
+app.set 'port', 3000
+app.set 'port', process.env.PORT if app.get('mode') == 'production'
+
 
 app.set	'views', __dirname + '/views'
 app.set 'view engine', 'jade'
