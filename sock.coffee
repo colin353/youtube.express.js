@@ -10,7 +10,8 @@ io = require 'socket.io'
 io = io.listen(process.httpserverinstance)
 
 # Database has already been setup. Use it from here.
-db = process.db
+db  = process.db
+app = process.app
 
 # Use long-polling.
 io.configure ->
@@ -27,10 +28,20 @@ class Video
 	@get: (callback) ->
 		retval = [];
 
+		console.log 'Querying for videos.'
+
 		db.query "select * from videos order by last_played = NULL desc, last_played asc limit 4", (err, result) ->
 			throw err if err
-			for row in result
-				retval.push new Video(row.id)
+			if app.get('mode') == 'development'
+				# MySQL
+				for row in result
+					retval.push new Video(row.id)
+					console.log 'Collating video ',row.id
+			else 
+				# PSQL
+				for row in result.rows
+					retval.push new Video(row.id)
+					console.log 'Collating video ',row.id
 
 			f = ->
 				loaded = yes
@@ -54,12 +65,24 @@ class Video
 			@id = id
 			@loaded = false
 			me = @
-			db.query "select * from videos where id = #{@id}", (err, result) ->
-				throw err if err
-				me.last_played 	= result[0].last_played
-				me.video_code	= result[0].video_code
-				me.loaded 		= yes
-				callback() if callback?
+
+			if app.get('mode') == 'development'	
+				# MySQL
+				db.query "select * from videos where id = #{@id}", (err, result) ->
+					throw err if err
+					me.last_played 	= result[0].last_played
+					me.video_code	= result[0].video_code
+					me.loaded 		= yes
+					callback() if callback?
+			else
+				# PSQL
+				db.query "select * from videos where id = #{@id}", (err, result) ->
+					throw err if err
+					me.last_played 	= result.rows[0].last_played
+					me.video_code	= result.rows[0].video_code
+					me.loaded 		= yes
+					callback() if callback?
+
 			@saved = yes
 		else
 			# Then the user must want to make a new one.
