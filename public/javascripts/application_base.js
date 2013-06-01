@@ -193,7 +193,7 @@ volumeDetector = function(e) {
   y_o = this.offsetTop - this.scrollTop;
   x = e.pageX - x_o;
   y = e.pageY - y_o;
-  return document.setVolume(x / 3);
+  return document.setVolume(x * 100 / $('.volume-container').width());
 };
 
 isPlaying = function() {

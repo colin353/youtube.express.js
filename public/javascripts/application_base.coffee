@@ -160,7 +160,7 @@ volumeDetector = (e) ->
 	x = e.pageX - x_o
 	y = e.pageY - y_o
 
-	document.setVolume(x / 3)
+	document.setVolume(x * 100 / $('.volume-container').width())
 
 # ----------------------------------
 # Startup animations and other stuff

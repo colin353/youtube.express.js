@@ -70,3 +70,45 @@ a {
 	background-color: #AAAAAA;
 	display: inline-block;
 }
+
+.media.well {
+	min-width:375px;
+}
+
+@media screen and (max-width: 1000px) {
+
+
+	.volume-container {
+		width: 225px;
+	}
+
+	.main-contain {
+		margin-left: 0px !important;
+	}
+
+	body {
+		padding: 0 !important;
+	}
+}
+
+@media screen and (max-width: 788px) {
+
+	.volume-container {
+		width: 225px;
+	}
+
+	.main-contain {
+		margin-left: 0px !important;
+	}
+
+	body {
+		padding: 20px !important;
+	}
+
+	.interface-button {
+		margin: 0 0;
+		display:inline-block !important;
+		width:200px !important;
+		clear: none;
+	}
+}
