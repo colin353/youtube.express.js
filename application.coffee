@@ -69,5 +69,7 @@ else
 
 process.db = db
 
+# Perform migration, if necessary.
+
 # Do socket.io connection setup.
 require './sock'
