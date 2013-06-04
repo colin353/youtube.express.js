@@ -75,6 +75,10 @@ a {
 	min-width:375px;
 }
 
+a.btn.add-button {
+	float: right;
+}
+
 @media screen and (max-width: 1000px) {
 
 

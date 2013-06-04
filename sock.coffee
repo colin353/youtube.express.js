@@ -30,9 +30,9 @@ class Video
 
 		console.log 'Querying for videos.'
 
-		db.query "select * from videos order by last_played = NULL desc, last_played asc limit 4", (err, result) ->
+		db.query "select * from videos order by last_played is NULL desc, last_played asc limit 4", (err, result) ->
 			throw err if err
-			if app.get('mode') == 'development'
+			if app.get('database type') == 'mysql'
 				# MySQL
 				for row in result
 					retval.push new Video(row.id)
@@ -66,7 +66,7 @@ class Video
 			@loaded = false
 			me = @
 
-			if app.get('mode') == 'development'	
+			if app.get('database type') == 'mysql'	
 				# MySQL
 				db.query "select * from videos where id = #{@id}", (err, result) ->
 					throw err if err
@@ -97,7 +97,7 @@ class Video
 				me.id = result.insertId
 				callback() if callback?
 		else
-			db.query "insert into videos (video_code) value ('#{@video_code}')"
+			db.query "insert into videos (video_code) values ('#{@video_code}')"
 			@saved = yes
 			callback() if callback?
 

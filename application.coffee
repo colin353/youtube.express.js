@@ -54,21 +54,27 @@ process.httpserverinstance = http.createServer(app).listen app.get('port'), ->
 # Connect to the database
 
 if app.get('mode') == 'production'
+	app.set 'database type', 'pg'
 	console.log 'Attempting to connect to pg via ', app.get('database url')
 	pg = require 'pg'
 	db = new pg.Client app.get('database url')
 	db.connect()
 else 
+	app.set 'database type', 'pg'
 	console.log 'Attempting to connect to pg via ', app.get('database url')
 	pg = require 'pg'
-	db = new pg.Client "host=localhost user=postgres dbname=videos password=bitnami" #tcp://postgres:5432@localhost/videos?user=postgres&password=bitnami"
+	db = new pg.Client "postgres://postgres:bitnami@127.0.0.1:5432/videos"
 	db.connect()
 process.db  = db
 process.app = app
 
 # Perform migration, if necessary.
 
+console.log 'Initiating migration process.'
 require './migration'
 
 # Do socket.io connection setup.
+console.log 'Initiating socket connection process.'
 require './sock'
+
+

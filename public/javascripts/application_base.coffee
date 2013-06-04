@@ -97,6 +97,9 @@ document.skip  =  ->
 document.didSkipVideo = ->
 	console.log 'Skipped.'
 
+document.addVideo = (video_code) ->
+	socket.emit 'add', {video_code: video_code}
+
 renderUpcomingIfAvailable = ->
 	all_loaded = yes
 	for v in video_media
@@ -187,4 +190,24 @@ onAllReady = ->
 	$('.skip-control').click document.skip
 	$('.play-control').click document.play
 
-	
+`document.getURLParameter = function getURLParameter(url,name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(url)||[,""])[1].replace(/\+/g, '%20'))||null;
+}`
+
+#getURLParameter = (url, name) ->
+#    `return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(url)||[,""])[1].replace(/\+/g, '%20'))||null;`
+
+$ ->
+	$('.add-button').click ->
+		$('.add-modal').modal 'show'
+	$('.modal-save').click ->
+		# No need to close the dialog because that is
+		# taken care of by data-dismiss. But here we need
+		# to submit the actual value.
+		url = $('.add-value').val()
+		# Blank the actual value
+		$('.add-value').val ' '
+		# Get the "v" parameter from the video URL.
+		video_code = document.getURLParameter url, 'v'
+
+		document.addVideo video_code

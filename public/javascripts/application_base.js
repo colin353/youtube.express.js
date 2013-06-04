@@ -113,6 +113,12 @@ document.didSkipVideo = function() {
   return console.log('Skipped.');
 };
 
+document.addVideo = function(video_code) {
+  return socket.emit('add', {
+    video_code: video_code
+  });
+};
+
 renderUpcomingIfAvailable = function() {
   var all_loaded, v, _i, _j, _len, _len1;
 
@@ -215,3 +221,21 @@ onAllReady = function() {
   $('.skip-control').click(document.skip);
   return $('.play-control').click(document.play);
 };
+
+document.getURLParameter = function getURLParameter(url,name) {
+    return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(url)||[,""])[1].replace(/\+/g, '%20'))||null;
+};
+
+$(function() {
+  $('.add-button').click(function() {
+    return $('.add-modal').modal('show');
+  });
+  return $('.modal-save').click(function() {
+    var url, video_code;
+
+    url = $('.add-value').val();
+    $('.add-value').val(' ');
+    video_code = document.getURLParameter(url, 'v');
+    return document.addVideo(video_code);
+  });
+});

@@ -25,13 +25,13 @@ Video = (function() {
 
     retval = [];
     console.log('Querying for videos.');
-    return db.query("select * from videos order by last_played = NULL desc, last_played asc limit 4", function(err, result) {
+    return db.query("select * from videos order by last_played is NULL desc, last_played asc limit 4", function(err, result) {
       var f, row, _i, _j, _len, _len1, _ref;
 
       if (err) {
         throw err;
       }
-      if (app.get('mode') === 'development') {
+      if (app.get('database type') === 'mysql') {
         for (_i = 0, _len = result.length; _i < _len; _i++) {
           row = result[_i];
           retval.push(new Video(row.id));
@@ -76,7 +76,7 @@ Video = (function() {
       this.id = id;
       this.loaded = false;
       me = this;
-      if (app.get('mode') === 'development') {
+      if (app.get('database type') === 'mysql') {
         db.query("select * from videos where id = " + this.id, function(err, result) {
           if (err) {
             throw err;
@@ -123,7 +123,7 @@ Video = (function() {
         }
       });
     } else {
-      db.query("insert into videos (video_code) value ('" + this.video_code + "')");
+      db.query("insert into videos (video_code) values ('" + this.video_code + "')");
       this.saved = true;
       if (callback != null) {
         return callback();

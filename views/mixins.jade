@@ -23,3 +23,15 @@ mixin controls()
 					i.icon-fast-forward 
 
 
+mixin add_dialog()
+	div.modal.hide.fade.add-modal
+		div.modal-header
+			button.close(type=button, data-dismiss='modal', aria-hidden='true') &times;
+			h3 Add a video
+		div.modal-body
+			p Add a video by pasting a YouTube URL.
+			input.add-value(type='text', placeholder='http://www.youtube.com/watch?v=wiAiRBFHgYI')
+		div.modal-footer
+			a.btn(data-dismiss='modal', href='#') Close
+			a.btn.btn-primary.modal-save(data-dismiss='modal',href='#') Save changes
+

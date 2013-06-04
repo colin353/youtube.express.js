@@ -8,7 +8,7 @@
 app = process.app
 db 	= process.db
 
-if app.get('mode') == 'development'
+if app.get('database type') == 'mysql'
 	# MySQL table creation.
 	db.query "CREATE TABLE IF NOT EXISTS `videos` (
 	  `id` int(11) NOT NULL AUTO_INCREMENT,
