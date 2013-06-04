@@ -53,8 +53,6 @@ document.connectToServer = ->
 		video_media = []
 		$('.media-list').html(' ');
 
-		playing_video = videos[0]
-
 		for v in videos
 			if !playing_video? or v.video_code != playing_video.video_code
 				video_media.push new MediaInterfaceElement(v) 

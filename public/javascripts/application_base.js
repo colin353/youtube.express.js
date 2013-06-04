@@ -52,7 +52,6 @@ document.connectToServer = function() {
     }
     video_media = [];
     $('.media-list').html(' ');
-    playing_video = videos[0];
     for (_i = 0, _len = videos.length; _i < _len; _i++) {
       v = videos[_i];
       if ((playing_video == null) || v.video_code !== playing_video.video_code) {
