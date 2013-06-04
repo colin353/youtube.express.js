@@ -94,6 +94,9 @@ document.skip  =  ->
 	vid = playing_video 
 	socket.emit 'skip', vid
 
+video_not_yet_started = ->
+	false
+
 document.didSkipVideo = ->
 	console.log 'Skipped.'
 

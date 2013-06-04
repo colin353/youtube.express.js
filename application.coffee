@@ -44,7 +44,7 @@ app.use app.router
 if app.get('mode') == 'development'
 	app.use express.errorHandler
 
-app.get '/', routes.index
+app.get '/', routes.client
 app.get '/client', routes.client
 app.get '/server', routes.server
 
