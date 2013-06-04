@@ -57,16 +57,12 @@ if app.get('mode') == 'production'
 	console.log 'Attempting to connect to pg via ', app.get('database url')
 	pg = require 'pg'
 	db = new pg.Client app.get('database url')
+	db.connect()
 else 
-	console.log 'Attempting to connect to mysql via ', app.get('database url')
-	mysql = require 'mysql'
-	db = mysql.createConnection {
-		host: 		'localhost',
-		user: 		'root',
-		password: 	'bitnami',
-		database:	'video'
-	}
-
+	console.log 'Attempting to connect to pg via ', app.get('database url')
+	pg = require 'pg'
+	db = new pg.Client "host=localhost user=postgres dbname=videos password=bitnami" #tcp://postgres:5432@localhost/videos?user=postgres&password=bitnami"
+	db.connect()
 process.db  = db
 process.app = app
 
