@@ -51,12 +51,15 @@ document.connectToServer = ->
 
 
 		video_media = []
-		$('.media-list').html(' ');	
-
-		for v in videos.slice(1) 
-			video_media.push new MediaInterfaceElement(v)
+		$('.media-list').html(' ');
 
 		playing_video = videos[0]
+
+		for v in videos
+			if !playing_video? or v.video_code != playing_video.video_code
+				video_media.push new MediaInterfaceElement(v) 
+			else 
+				playing_video = v
 
 		setTimeout(renderUpcomingIfAvailable,200)
 
@@ -95,7 +98,7 @@ document.skip  =  ->
 	socket.emit 'skip', vid
 
 video_not_yet_started = ->
-	false
+	true
 
 document.didSkipVideo = ->
 	console.log 'Skipped.'

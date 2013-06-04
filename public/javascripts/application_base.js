@@ -44,7 +44,7 @@ document.connectToServer = function() {
     }
   });
   socket.on('upcoming', function(videos) {
-    var v, _i, _len, _ref;
+    var v, _i, _len;
 
     console.log('Got a new video list.');
     if (videos.length > 0 && video_not_yet_started()) {
@@ -52,12 +52,15 @@ document.connectToServer = function() {
     }
     video_media = [];
     $('.media-list').html(' ');
-    _ref = videos.slice(1);
-    for (_i = 0, _len = _ref.length; _i < _len; _i++) {
-      v = _ref[_i];
-      video_media.push(new MediaInterfaceElement(v));
-    }
     playing_video = videos[0];
+    for (_i = 0, _len = videos.length; _i < _len; _i++) {
+      v = videos[_i];
+      if ((playing_video == null) || v.video_code !== playing_video.video_code) {
+        video_media.push(new MediaInterfaceElement(v));
+      } else {
+        playing_video = v;
+      }
+    }
     return setTimeout(renderUpcomingIfAvailable, 200);
   });
   return document.join();
@@ -110,7 +113,7 @@ document.skip = function() {
 };
 
 video_not_yet_started = function() {
-  return false;
+  return true;
 };
 
 document.didSkipVideo = function() {
