@@ -17,7 +17,7 @@ $ ->
 # youtube flash object when it is
 # ready to go.
 
-onYouTubePlayerReady = ->
+@onYouTubePlayerReady = ->
 	document.player = $('#'+playerID).get(0)
 	document.player.playVideo()
 	document.connectToServer()

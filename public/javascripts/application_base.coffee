@@ -68,7 +68,6 @@ document.connectToServer = ->
 document.join = (party = 'default') ->
 	socket.emit 'join', 'default'
 
-
 document.play = ->
 	socket.emit 'play', {}
 
@@ -106,6 +105,12 @@ document.didSkipVideo = ->
 document.addVideo = (video_code) ->
 	socket.emit 'add', {video_code: video_code}
 
+document.didUpdateUpcoming = ->
+	$('ul.media-list .media').click ->
+		$(this).css('position', 'relative').css('z-index', 100)
+		$('.bigblock').css('opacity','0.5').show()
+		
+
 renderUpcomingIfAvailable = ->
 	all_loaded = yes
 	for v in video_media
@@ -119,9 +124,11 @@ renderUpcomingIfAvailable = ->
 		for v in video_media
 			v.insert()
 
-		setTimeout(onAllReady(),300) if !allLoaded
+	document.didUpdateUpcoming()
+	if !allLoaded 
+		setTimeout(onAllReady(),300) 
 	else 
-		setTimeout(renderUpcomingIfAvailable,200)
+		setTimeout(renderUpcomingIfAvailable,200) 
 
 # ----------------------------------
 # MediaInterfaceElements

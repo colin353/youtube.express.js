@@ -128,6 +128,13 @@ document.addVideo = function(video_code) {
   });
 };
 
+document.didUpdateUpcoming = function() {
+  return $('ul.media-list .media').click(function() {
+    $(this).css('position', 'relative').css('z-index', 100);
+    return $('.bigblock').css('opacity', '0.5').show();
+  });
+};
+
 renderUpcomingIfAvailable = function() {
   var all_loaded, v, _i, _j, _len, _len1;
 
@@ -145,9 +152,10 @@ renderUpcomingIfAvailable = function() {
       v = video_media[_j];
       v.insert();
     }
-    if (!allLoaded) {
-      return setTimeout(onAllReady(), 300);
-    }
+  }
+  document.didUpdateUpcoming();
+  if (!allLoaded) {
+    return setTimeout(onAllReady(), 300);
   } else {
     return setTimeout(renderUpcomingIfAvailable, 200);
   }
