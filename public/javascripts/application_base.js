@@ -50,6 +50,9 @@ document.connectToServer = function() {
     if (videos.length > 0 && video_not_yet_started()) {
       document.didSkipVideo(videos[0].video_code);
     }
+    if ((playing_video == null) && videos.length > 0) {
+      playing_video = videos[0];
+    }
     video_media = [];
     $('.media-list').html(' ');
     for (_i = 0, _len = videos.length; _i < _len; _i++) {

@@ -49,6 +49,8 @@ document.connectToServer = ->
 		if(videos.length > 0 && video_not_yet_started())
 			document.didSkipVideo videos[0].video_code;
 
+		if !playing_video? and videos.length > 0
+			playing_video = videos[0]
 
 		video_media = []
 		$('.media-list').html(' ');
